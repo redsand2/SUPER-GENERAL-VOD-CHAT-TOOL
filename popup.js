@@ -84,14 +84,13 @@ function subscribeProgress() {
 }
 
 // 워치독: 진행률 갱신이 오래 멈추면 버튼 복원(배경 초기화 미동작 대비)
-function startWatchdog(ms = 1000, idleMs = 8000) {
+function startWatchdog(ms = 1000, idleMs = 10000) {
   if (watchdog) return;
   watchdog = setInterval(() => {
     if (!running) return;
     const since = Date.now() - (lastProg.ts || 0);
     // 진행률이 8초 이상 갱신되지 않았고, 현재 100%이거나(일반적 완주) 아예 미갱신이면 버튼 복원
     if (since > idleMs && (lastProg.pct >= 100 || lastProg.ts === 0)) {
-      markDone('진행이 멈춰 버튼을 복원했어요.');
     }
   }, ms);
 }
@@ -180,7 +179,9 @@ els.start?.addEventListener('click', async () => {
   startWatchdog();
 })();
 
-// 팝업 닫힐 때 정리(선택)
-window.addEventListener('unload', () => {
-  stopWatchdog();
+// 로드취소 이벤트 수정본
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'hidden') {
+    stopWatchdog();
+  }
 });

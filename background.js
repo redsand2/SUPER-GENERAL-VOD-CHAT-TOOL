@@ -44,33 +44,41 @@ async function getchatfromisokey(
   let s = 0;
   let lastxml = null;
   let h5 = 0;
+  let h1 = 0;
   if (r > 0){
     for (const j of (rowkey_durations.slice(0, r))){
-      s += j;
+      s += ~~(j / 1000);
     }
   }
   run = true;
 
   while(true) {
-    if (startTime > 18000 || startTime == ((rowkey_duration / 3600) * 3600 + 3600) || h5 > 3) {
-      await setProgress(startTime, `카테고리 점프`, d, r, s);
+    if (startTime > 18000 || startTime == ((rowkey_duration / 3600) * 3600 + 3600) || h5 > 1) {
+      await setProgress((startTime - 3600), `카테고리 점프`, d, r, s);
       break;
+    }
+    if (h1 > 1) { // h1 청크가 비었으면 1시간 점프 (404에러로 검증)
+      await setProgress(startTime, `1시간 점프`, d, r, s);
+      startTime += 3600;
+      h1 = 0;
     }
     try {
       let res;
       try {
         res = await fetch(`${rowkey}&startTime=${startTime}`, { cache: "no-store" });
       } catch (e) {
-        await setProgress(startTime, `찾는 중.. ${e?.message || e}`, d, r, s);
-        await sleep(1000);
+        await setProgress(startTime, `자료 찾는 중.. ${e?.message || e}`, d, r, s);
+        await sleep(600);
         continue;
       }
       if (!res.ok){
-        await setProgress(startTime, `${res.status} 수신`, d, r, s);
         if (res.status == 500) {
           h5++;
         }
-        await sleep(1000);
+        if (res.status == 404) {
+          h1++;
+        }
+        await sleep(600);
         continue;
       }
       const xmlText = await res.text();
@@ -93,7 +101,7 @@ async function getchatfromisokey(
       continue;
     } catch (e) {
       await setProgress(startTime, `오류(01): ${e?.message || e}`, d, r, s);
-      await sleep(1000);
+      await sleep(600);
       continue;
     }
   }
@@ -214,11 +222,11 @@ function getfiles(aaa, address) {
 async function setProgress(a, text="-await-", b=null, rowkey_n=-1, s=0) {
   let pct = 0;
   if (s > 0) {
-    pct = Math.max(0, Math.min(100, ~~(((a * 1000 + s) / b) * 100)));
+    pct = Math.max(0, Math.min(100, ~~(((a + s) / b) * 100000)));
   } else {
     pct = Math.max(0, Math.min(100, ~~(a / b * 100000)));
   }
-  console.log(pct, text);
+  console.log(pct, a , text, b, s);
   try {
     chrome.runtime.sendMessage(
       { type: 'PROGRESS', payload: { pct, text } },

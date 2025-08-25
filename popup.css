@@ -62,7 +62,7 @@ body {
 }
 .progress-label {
   position: absolute;
-  right: 8px;
+  left: 50%;
   top: 50%;
   transform: translateY(-50%);
   font-size: 11px;
