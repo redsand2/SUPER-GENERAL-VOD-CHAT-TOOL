@@ -3,15 +3,29 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>SOOP VOD CHAT EXTRACTOR(temp)</title>
+  <title>SUPER GENERAL VOD CHAT EXTRACTOR v1</title>
   <link rel="stylesheet" href="popup.css" />
 </head>
 <body>
   <div class="container">
-    <h1 class="title">개발중</h1>
+    <h1 class="title">SUPER GENERAL VOD CHAT EXTRACTOR v1</h1>
 
-    <label for="soopUrl" class="label">다시보기 링크를 입력해주세용가리</label>
-    <input id="soopUrl" type="text" class="input" placeholder="예: https://vod.sooplive.co.kr/… 또는 1234567890" />
+    <label for="url" class="label">다시보기 링크를 입력해주세용가리</label>
+    <input id="url" type="text" class="input" placeholder="URL 또는 숫자를 입력해 주세요" />
+    
+    <!-- 시간 구간(기본 전체) -->
+    <div class="section">
+      <div class="time-row">
+        <div class="time-col">
+          <label for="timeStart">시작 시간(선택)</label>
+          <input id="timeStart" type="text" inputmode="numeric" placeholder="00:00:00">
+        </div>
+        <div class="time-col">
+          <label for="timeEnd">종료 시간(선택)</label>
+          <input id="timeEnd" type="text" inputmode="numeric" placeholder="hh:mm:ss">
+        </div>
+      </div>
+    </div>
 
     <button id="startBtn" class="btn primary">CSV 생성 시작</button>
 
@@ -20,7 +34,7 @@
       <span class="progress-label"><span id="progressPct">0</span>%</span>
     </div>
 
-    <div id="status" class="status">대기 중…</div>
+    <div id="status" class="status">대기 중</div>
   </div>
   <script src="popup.js" defer></script>
 </body>

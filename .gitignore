@@ -1,1 +1,11 @@
 *.pem
+*.json
+*.xml
+*.log
+*.txt
+*.csv
+*.psd
+*.png
+*.mp4
+*.jpg
+!manifest.json

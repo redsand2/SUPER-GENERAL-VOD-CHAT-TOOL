@@ -1,11 +1,13 @@
 :root {
   --bg: #111;
-  --fg: #e8e8e8;
+  --fg: #FFFFFF;
   --muted: #a0a0a0;
   --primary: #4da3ff;
   --primary-weak: #2a65a8;
   --bar-bg: #2a2a2a;
   --bar-fill: #4da3ff;
+  --bar-fill-start: #4e9cff;
+  --bar-fill-end: #2ecc71;
   --border: #2a2a2a;
 }
 
@@ -84,4 +86,105 @@ body {
   font-size: 11px;
   color: var(--muted);
   line-height: 1.4;
+}
+
+/* 시간 입력 행: 각 라벨 아래에 입력칸 정렬 */
+.time-row {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 12px;
+}
+.time-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* 시작/종료 입력칸은 적당히 짧게 */
+#timeStart, #timeEnd {
+  width: 100%;
+  max-width: 160px;
+  margin-top: 4px;
+}
+
+#timeStart,
+#timeEnd {
+  display: block !important;
+  width: 120px !important;      /* 원하는 폭으로 조정: 140/120/100px 등 */
+  max-width: 120px !important;  /* 동일 상한 고정 */
+  box-sizing: border-box;
+  margin: 4px auto 0 !important; 
+  padding: 6px 8px;            
+}
+
+/* timestart / timeend (Chrome 전용 최소 오버라이드) */
+#timestart,
+#timeend {
+  width: 100%;
+  height: 38px;
+  padding: 8px 12px;
+  border: 1px solid var(--border, #e5e7eb);
+  border-radius: 10px;
+  background: transparent;
+  color: var(--text, #10141a);
+  font-size: 14px;
+  line-height: 1.2;
+  outline: none;
+  transition: border-color .2s ease, box-shadow .2s ease, background-color .2s ease;
+}
+
+#timestart::placeholder,
+#timeend::placeholder {
+  color: var(--muted, #9aa1ac);
+}
+
+#timestart:focus,
+#timeend:focus {
+  border-color: var(--primary, #1e66f5);
+  box-shadow: 0 0 0 3px rgba(30, 102, 245, .15);
+}
+
+/* 숫자 입력 스핀 제거 (Chrome/WebKit) */
+#timestart::-webkit-outer-spin-button,
+#timestart::-webkit-inner-spin-button,
+#timeend::-webkit-outer-spin-button,
+#timeend::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+/* 표준 appearance (크롬 지원) */
+#timestart[type="number"],
+#timeend[type="number"] {
+  appearance: textfield;
+}
+
+
+/* timeStart / timeEnd: 기존 .input 스타일과 통일 (Chrome 기준) */
+#timeStart,
+#timeEnd {
+  width: 100%;
+  height: 38px;
+  padding: 8px 12px;
+  border: 1px solid var(--border, #e5e7eb);
+  border-radius: 10px;
+  background-color: var(--panel, #111);
+  color: var(--text, #e7eaf0);
+  font-size: 14px;
+  line-height: 1.2;
+  outline: none;
+  transition: border-color .2s ease, box-shadow .2s ease, background-color .2s ease;
+}
+
+/* placeholder 톤 맞춤 */
+#timeStart::placeholder,
+#timeEnd::placeholder {
+  color: var(--muted, #9aa1ac);
+}
+
+/* 포커스 상태 통일 */
+#timeStart:focus,
+#timeEnd:focus {
+  border-color: var(--primary, #1e66f5);
+  box-shadow: 0 0 0 3px rgba(30, 102, 245, .18);
 }
