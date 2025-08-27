@@ -5,7 +5,8 @@
 
 ## 사용법
 1. VOD 주소 입력
-   (예: `https://chzzk.naver.com/video/1234567`, `https://vod.sooplive.co.kr/player/987654321`,
+   (예: `https://chzzk.naver.com/video/1234567`,
+`https://vod.sooplive.co.kr/player/987654321`,
    다중 작업 예시: `https://chzzk.naver.com/video/1111111https://vod.sooplive.co.kr/player/222222222https://vod.sooplive.co.kr/player/333333333`)
 2. 시작/종료 시각(선택): `hh:mm:ss` (숲은 워낙 속도가 빨라서 기능을 지원하지 않습니다)
 3. [추출하기 (CSV)] 버튼 클릭
